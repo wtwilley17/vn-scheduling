@@ -6,10 +6,18 @@ components:
     properties: {text: Upload Available Agent for Next Month}
     type: Label
   - components:
-    - layout_properties: {grid_position: 'TATFTY,IGLFOT'}
-      name: data_row_panel_1
-      properties: {}
-      type: DataRowPanel
+    - components:
+      - name: agent_data_repeating
+        properties: {item_template: Form1.RowTemplate3}
+        type: RepeatingPanel
+      layout_properties: {grid_position: 'BQLSAV,LBCCHU'}
+      name: agent_data_grid
+      properties:
+        columns:
+        - {data_key: agent_id, id: PJAFKA, title: agent_id}
+        - {data_key: role, id: YQQHBQ, title: role}
+        - {data_key: stat, id: NFPNMH, title: stat}
+      type: DataGrid
     layout_properties: {grid_position: 'YWIMGP,OSJDZQ'}
     name: card_2
     properties: {role: card}
@@ -18,7 +26,8 @@ components:
     name: file_loader_2
     properties: {}
     type: FileLoader
-  - layout_properties: {grid_position: 'PKJRXJ,KFKAER'}
+  - event_bindings: {click: button_3_click}
+    layout_properties: {grid_position: 'PKJRXJ,KFKAER'}
     name: button_3
     properties: {text: Upload Agent}
     type: Button
@@ -28,20 +37,16 @@ components:
     type: Label
   - components:
     - components:
-      - name: repeating_panel_1
-        properties: {item_template: Form1.RowTemplate2}
+      - name: agent_leave_repeating
+        properties: {item_template: Form1.RowTemplate4}
         type: RepeatingPanel
-      layout_properties: {grid_position: 'FOJKFI,HYRNFO'}
+      layout_properties: {grid_position: 'CANSJY,QUELOX'}
       name: data_grid_1
       properties:
         columns:
-        - {data_key: column_1, id: JKSDUP, title: date_leave}
-        - {data_key: column_2, id: VJQQOR, title: name}
-        - {data_key: column_3, id: OJLQEN, title: email}
-        - {data_key: column_4, id: PNHLAB, title: reason}
-        - {data_key: column_1, id: NVPQLX, title: day}
-        - {data_key: column_1, id: ZXQIPY, title: month}
-        - {data_key: column_2, id: PPTOUA, title: year}
+        - {data_key: date_leave, id: XMJIDX, title: date_leave}
+        - {data_key: name, id: WOUDFA, title: name}
+        - {data_key: reason, id: BHQBXZ, title: reason}
       type: DataGrid
     layout_properties: {grid_position: 'OICJXV,GCGFDE'}
     name: card_1
@@ -51,7 +56,8 @@ components:
     name: file_loader_1
     properties: {align: center}
     type: FileLoader
-  - layout_properties: {grid_position: 'LIYVDZ,LXEDVO'}
+  - event_bindings: {click: button_4_click}
+    layout_properties: {grid_position: 'LIYVDZ,LXEDVO'}
     name: button_4
     properties: {text: Upload Leave}
     type: Button
@@ -69,25 +75,23 @@ components:
     type: Label
   - components:
     - components:
-      - layout_properties: {grid_position: 'RKABWH,QCTWUO'}
-        name: data_row_panel_3
-        properties: {}
-        type: DataRowPanel
+      - layout_properties: {grid_position: 'PUCQEU,ODXKES'}
+        name: holiday_text
+        properties: {enabled: false, visible: true}
+        type: TextArea
       - layout_properties: {grid_position: 'WZXZNS,RTJBYR'}
-        name: date_picker_1
+        name: holiday_date
         properties: {}
         type: DatePicker
-      - layout_properties: {grid_position: 'VDHZUU,IRKKGR'}
-        name: button_1
+      - event_bindings: {click: add_holiday_click}
+        layout_properties: {grid_position: 'VDHZUU,IRKKGR'}
+        name: add_holiday
         properties: {text: Add}
         type: Button
-      - layout_properties: {grid_position: 'FEGFGH,RPKGEX'}
-        name: button_5
+      - event_bindings: {click: reset_holiday_click}
+        layout_properties: {grid_position: 'FEGFGH,RPKGEX'}
+        name: reset_holiday
         properties: {text: Reset}
-        type: Button
-      - layout_properties: {grid_position: 'APZUFS,BZLVTW'}
-        name: button_2
-        properties: {text: Submit}
         type: Button
       layout_properties: {}
       name: card_4
