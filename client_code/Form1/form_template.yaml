@@ -56,9 +56,9 @@ components:
     name: file_loader_1
     properties: {align: center}
     type: FileLoader
-  - event_bindings: {click: button_4_click}
+  - event_bindings: {click: upload_leave_click}
     layout_properties: {grid_position: 'LIYVDZ,LXEDVO'}
-    name: button_4
+    name: upload_leave
     properties: {text: Upload Leave}
     type: Button
   - layout_properties: {grid_position: 'XBOULT,MHYLFN'}

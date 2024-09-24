@@ -3,18 +3,18 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
-import csv
 import io
-from datetime import datetime
+import csv
+from datetime import datetime, date, timedelta
 from pulp import *
 import numpy as np
 from itertools import product
 from calendar import monthrange
-from datetime import datetime
 import random
 import warnings
 from dateutil.relativedelta import relativedelta, MO
 from pandas.tseries.offsets import MonthEnd
+warnings.filterwarnings("ignore")
 
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
@@ -63,21 +63,28 @@ def store_leave_data(file):
   for row in csv_reader:
     app_tables.agent_leave.add_row(date_leave=pd.to_datetime(row[0]).date(),name=row[1],reason=row[2])
 
+@anvil.server.callable
+def store_df1bas():
+  # Reset Table
+  app_tables.df1_bas.delete_all_rows()
+  df = create_df1_bas()
+  for index, row in df.iterrows():
+    app_tables.df1_bas.add_row(name=row['name'], reason=row['reason'],daynum=row['daynum'])
 
 
 
 ### Scheduling ####
 def dummy_df(start, end, x):
-    date_range = pd.date_range(start, end)
-    repeated_dates = date_range.repeat(x)
-    df = pd.DataFrame(repeated_dates, columns=['date1'])
-    df['date1']=pd.to_datetime(df['date1']).dt.date
-    return df
+  date_range = pd.date_range(start, end)
+  repeated_dates = date_range.repeat(x)
+  df = pd.DataFrame(repeated_dates, columns=['date1'])
+  df['date1']=pd.to_datetime(df['date1']).dt.date
+  return df
   
 def create_date():
   # Get the first date for next month
-  today = date.today()
-  date1_next_month = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
+  today = datetime.today()
+  date1_next_month = (today.replace(day=1) + timedelta(days=32)).replace(day=1)
   
   # Get the last 2 monday from this month
   last2_monday = date1_next_month + relativedelta(weekday=MO(-2))
@@ -91,9 +98,9 @@ def create_date():
   print(end_mo.strftime("%Y-%m-%d"))
   print(end_mo2.strftime("%Y-%m-%d"))
   
-  delta = end_mo2.date() - last2_monday
+  delta = end_mo2.date() - last2_monday.date()
   num_days1 =delta.days+1
-  num_days2 = delta.days+2
+  num_days2 =delta.days+2
   delta_days = num_days1*14
   return date1_next_month,last2_monday,end_mo,end_mo2,num_days1,num_days2,delta_days
 
@@ -103,13 +110,13 @@ def create_df1_bas():
   df1_bas = pandas.DataFrame.from_dict(dicts)
   df1_bas.date_leave = pd.to_datetime(df1_bas.date_leave)
   date1_next_month,last2_monday,end_mo,end_mo2,num_days1,num_days2,delta_days = create_date()
-  date_range = pd.date_range(last2_monday,end_mo2.date()).tolist()
+  date_range = pd.date_range(last2_monday,end_mo2).tolist()
   dfdm = pd.DataFrame(date_range, columns=['date'])
   dfdm['daynum'] = [i for i in range(1,num_days2)]
-  dfdm['date'] = pd.to_datetime(dfdm['date'] )
+  dfdm['date'] = pd.to_datetime(dfdm['date']).dt.normalize()
   df1_bas = df1_bas.merge(dfdm,right_on='date',left_on='date_leave')
-  df1_bas_ba =df1_bas.copy()
-  return df1_bas, df1_bas_ba
+  df1_bas = df1_bas[['name','reason','daynum']]
+  return df1_bas
 
 def create_dh1():
   dh1 = dummy_df(date1_next_month,end_mo2,14)

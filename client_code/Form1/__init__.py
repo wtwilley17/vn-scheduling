@@ -26,12 +26,12 @@ class Form1(Form1Template):
     anvil.server.call('store_agent_data',file)
     self.agent_data_repeating.items = app_tables.agent_data.search()
 
-  def button_4_click(self, **event_args):
+  def upload_leave_click(self, **event_args):
     """This method is called when the button is clicked"""
     file = self.file_loader_1.file
     anvil.server.call('store_leave_data',file)
     self.agent_leave_repeating.items = app_tables.agent_leave.search()
-
+    anvil.server.call('store_df1bas')
 
   def add_holiday_click(self, **event_args):
     """This method is called when the button is clicked"""
