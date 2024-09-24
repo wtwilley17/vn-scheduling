@@ -79,3 +79,7 @@ roles:
   display_in_toolbox: true
   name: card
   title: Card
+- components: [RichText]
+  display_in_toolbox: true
+  name: 'horizontal_scroll '
+  title: 'horizontal_scroll '

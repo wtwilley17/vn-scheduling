@@ -1,19 +1,5 @@
 allow_embedding: false
 db_schema:
-  agent_data:
-    client: search
-    columns:
-    - admin_ui: {order: 0, width: 200}
-      name: agent_id
-      type: string
-    - admin_ui: {order: 1, width: 200}
-      name: role
-      type: string
-    - admin_ui: {order: 2, width: 200}
-      name: stat
-      type: string
-    server: full
-    title: Table 2
   agent_leave:
     client: search
     columns:
@@ -27,12 +13,40 @@ db_schema:
       name: reason
       type: string
     server: full
-    title: Table 1
+    title: agent leave
+  agent_list:
+    client: search
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: agent_id
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: role
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: stat
+      type: string
+    server: full
+    title: agent list
   df1_bas:
     client: none
+    columns:
+    - admin_ui: {width: 200}
+      name: daynum
+      type: number
+    - admin_ui: {width: 200}
+      name: name
+      type: string
+    - admin_ui: {width: 200}
+      name: reason
+      type: string
+    server: full
+    title: df1_bas
+  final:
+    client: search
     columns: []
     server: full
-    title: Table 3
+    title: final
 name: VNCA
 package_name: VNCA
 runtime_options:
@@ -42,6 +56,6 @@ runtime_options:
   version: 2
 services:
 - client_config: {}
-  server_config: {}
+  server_config: {auto_create_missing_columns: true}
   source: /runtime/services/tables.yml
 startup_form: Form1

@@ -12,6 +12,7 @@ holiday_msg = ''
 
 class Form1(Form1Template):
   def __init__(self, **properties):
+    global column_names
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
@@ -20,11 +21,11 @@ class Form1(Form1Template):
     """This method is called when the selected date changes"""
     pass
 
-  def button_3_click(self, **event_args):
+  def upload_agent_click(self, **event_args):
     """This method is called when the button is clicked"""
     file = self.file_loader_2.file
     anvil.server.call('store_agent_data',file)
-    self.agent_data_repeating.items = app_tables.agent_data.search()
+    self.agent_data_repeating.items = app_tables.agent_list.search()
 
   def upload_leave_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -59,6 +60,11 @@ class Form1(Form1Template):
     """This method is called when the button is clicked"""
     global holiday
     anvil.server.call('submit_holiday',holiday)
+
+  def create_schedule_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    self.final_table.content = anvil.server.call('scheduling')
+    
     
     
     

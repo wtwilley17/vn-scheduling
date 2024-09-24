@@ -10,6 +10,16 @@ from anvil.tables import app_tables
 #    Module1.say_hello()
 #
 
-
+from datetime import datetime,timedelta
+from calendar import monthrange
 holiday = []
 holiday_msg = ''
+
+now = datetime.now()
+next_month = now + timedelta(28)
+year = next_month.year
+month = next_month.month
+tot_days = monthrange(year, month)[1]
+col_name1 = ['agent','role']
+col_name = [str(i) for i in range(1,tot_days+1)]
+column_names = col_name1 + col_name
