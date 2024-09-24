@@ -1,4 +1,45 @@
 allow_embedding: false
+db_schema:
+  agent_data:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: agent_id
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: role
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: stat
+      type: string
+    server: full
+    title: Table 2
+  leave_data:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: date_leave
+      type: date
+    - admin_ui: {order: 1, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: email
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: reason
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: day
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: month
+      type: number
+    - admin_ui: {order: 6, width: 200}
+      name: year
+      type: number
+    server: full
+    title: Table 1
 name: Classic 1
 package_name: Classic_1
 runtime_options:
@@ -6,4 +47,8 @@ runtime_options:
   server_spec: {base: python310-standard}
   server_version: python3-sandbox
   version: 2
-services: []
+services:
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/tables.yml
+startup_form: Form1
