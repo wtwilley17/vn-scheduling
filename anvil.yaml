@@ -28,6 +28,11 @@ db_schema:
       type: string
     server: full
     title: Table 1
+  df1_bas:
+    client: none
+    columns: []
+    server: full
+    title: Table 3
 name: Classic 1
 package_name: Classic_1
 runtime_options:
