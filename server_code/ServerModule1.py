@@ -2,6 +2,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import anvil.media
 import pandas as pd
 import io
 import csv
@@ -46,7 +47,9 @@ def store_agent_data(file):
   # Insert to table
   for row in csv_reader:
     app_tables.agent_list.add_row(agent_id=row[0],role=row[1],stat=row[2])
+  
 
+  
 @anvil.server.callable
 def store_leave_data(file):
   # Reset Table
@@ -63,7 +66,7 @@ def store_leave_data(file):
   # Insert to table
   for row in csv_reader:
     app_tables.agent_leave.add_row(date_leave=pd.to_datetime(row[0]).date(),name=row[1],reason=row[2])
-
+  
 @anvil.server.callable
 def store_df1bas():
   # Reset Table
@@ -75,16 +78,24 @@ def store_df1bas():
 
 @anvil.server.callable
 def scheduling():
+  global df1_bas,df2_bas
+  df1_bas = create_df1_bas(dfdm)
+  df2_bas = create_df2_bas()
   app_tables.final.delete_all_rows()
   Dt_bas, Dt__bas = capacity_vn_ca()
   final = str_func(Dt_bas=Dt_bas, Dt__bas=Dt__bas)
   for d in final.to_dict(orient="records"):
-      print(d)
       # d is now a dict of {columnname -> value} for this row
       # We use Python's **kwargs syntax to pass the whole dict as
       # keyword arguments
       app_tables.final.add_row(**d)
+  final.to_csv('/tmp/final.csv',index=False)
   return final.to_markdown()
+  
+@anvil.server.callable
+def get_csv():
+  media = anvil.media.from_file('/tmp/final.csv', 'csv', 'final.csv')
+  return media
   
 
 ### Scheduling ####
@@ -661,5 +672,3 @@ date1_next_month,last2_monday,end_mo,end_mo2,num_days1,num_days2,delta_days = cr
 dfdm = create_dfdm()
 dh1 = create_dh1()
 df = create_df(dfdm)
-df1_bas = create_df1_bas(dfdm)
-df2_bas = create_df2_bas()

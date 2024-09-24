@@ -64,6 +64,12 @@ class Form1(Form1Template):
   def create_schedule_click(self, **event_args):
     """This method is called when the button is clicked"""
     self.final_table.content = anvil.server.call('scheduling')
+
+  def download_result_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    csv = anvil.server.call('get_csv')
+    download(csv)
+
     
     
     
