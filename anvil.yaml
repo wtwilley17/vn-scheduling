@@ -33,8 +33,8 @@ db_schema:
     columns: []
     server: full
     title: Table 3
-name: Classic 1
-package_name: Classic_1
+name: VNCA
+package_name: VNCA
 runtime_options:
   client_version: '3'
   server_spec: {base: python310-standard}

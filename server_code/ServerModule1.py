@@ -93,10 +93,10 @@ def create_date():
   end_mo = today + MonthEnd(0)
   end_mo2 = date1_next_month + MonthEnd(0)
   
-  print(date1_next_month.strftime("%Y-%m-%d"))
-  print(last2_monday.strftime("%Y-%m-%d"))
-  print(end_mo.strftime("%Y-%m-%d"))
-  print(end_mo2.strftime("%Y-%m-%d"))
+  # print(date1_next_month.strftime("%Y-%m-%d"))
+  # print(last2_monday.strftime("%Y-%m-%d"))
+  # print(end_mo.strftime("%Y-%m-%d"))
+  # print(end_mo2.strftime("%Y-%m-%d"))
   
   delta = end_mo2.date() - last2_monday.date()
   num_days1 =delta.days+1
@@ -106,8 +106,8 @@ def create_date():
 
 def create_df1_bas():
   df1_bas_records = app_tables.agent_leave.search()
-  dicts = [{'date_leave': r['date_leave'], 'name': r['name'], 'reaseon': r['reason']} for r in df1_bas_records]
-  df1_bas = pandas.DataFrame.from_dict(dicts)
+  dicts = [{'date_leave': r['date_leave'], 'name': r['name'], 'reason': r['reason']} for r in df1_bas_records]
+  df1_bas = pd.DataFrame.from_dict(dicts)
   df1_bas.date_leave = pd.to_datetime(df1_bas.date_leave)
   date1_next_month,last2_monday,end_mo,end_mo2,num_days1,num_days2,delta_days = create_date()
   date_range = pd.date_range(last2_monday,end_mo2).tolist()
