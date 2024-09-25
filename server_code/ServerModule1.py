@@ -16,7 +16,7 @@ import warnings
 import xlrd
 from dateutil.relativedelta import relativedelta, MO
 from pandas.tseries.offsets import MonthEnd
-warnings.filterwarnings("ignore")
+
 
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
@@ -77,20 +77,26 @@ def store_df1bas():
     app_tables.df1_bas.add_row(name=row['name'], reason=row['reason'],daynum=row['daynum'])
 
 @anvil.server.callable
-def scheduling():
-  global df1_bas,df2_bas
+def scheduling(holiday_dates,a1,a2,a5):
+  global df1_bas,df2_bas,dh1
+  print(holiday_dates)
+  dh1 = create_dh1(holiday_dates)
   df1_bas = create_df1_bas(dfdm)
   df2_bas = create_df2_bas()
   app_tables.final.delete_all_rows()
-  Dt_bas, Dt__bas = capacity_vn_ca()
-  final = str_func(Dt_bas=Dt_bas, Dt__bas=Dt__bas)
-  for d in final.to_dict(orient="records"):
-      # d is now a dict of {columnname -> value} for this row
-      # We use Python's **kwargs syntax to pass the whole dict as
-      # keyword arguments
-      app_tables.final.add_row(**d)
-  final.to_csv('/tmp/final.csv',index=False)
-  return final.to_markdown()
+  Dt_bas, Dt__bas, status, supply, demand = capacity_vn_ca(a1,a2,a5)
+  if status == 'Optimal':
+    final = str_func(Dt_bas=Dt_bas, Dt__bas=Dt__bas)
+    for d in final.to_dict(orient="records"):
+        # d is now a dict of {columnname -> value} for this row
+        # We use Python's **kwargs syntax to pass the whole dict as
+        # keyword arguments
+        app_tables.final.add_row(**d)
+    final.to_csv('/tmp/final.csv',index=False)
+    return final.to_markdown() ,supply, demand
+  elif status == 'Infeasible':
+    return status, supply, demand
+    
   
 @anvil.server.callable
 def get_csv():
@@ -153,14 +159,19 @@ def create_dfdm():
   dfdm['date'] = pd.to_datetime(dfdm['date']).dt.normalize()
   return dfdm
 
-def create_dh1():
+def create_dh1(holiday_dates):
+  holiday_dates = [pd.to_datetime(i) for i in holiday_dates]
   dh1 = dummy_df(date1_next_month,end_mo2,14)
   dh1.date1 = pd.to_datetime(dh1.date1)
   dh1['name day'] = dh1.date1.dt.day_name()
   dh1['hr1'] =dh1.date1.dt.hour
   dh1['day'] = dh1.date1.dt.day
   dh1['check_holiday'] = 0
+  for index, row in dh1.iterrows():
+    if row['date1'] in holiday_dates:
+      dh1.at[index, 'check_holiday'] = 1
   return dh1
+
 
 def create_df(dfdm):
   df =dummy_df(last2_monday,end_mo2,14)
@@ -170,7 +181,8 @@ def create_df(dfdm):
   df['day'] = df.date1.dt.day
   return df
 
-def capacity_vn_ca():
+def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2):
+    print(a1_agent,a2_agent,a5_agent)
     now = datetime.now()
     next_month = now + relativedelta(months=+1)
     year = next_month.year
@@ -182,7 +194,7 @@ def capacity_vn_ca():
     i_s = random.sample(i_s, len(i_s))
     j_s =list(range(1,hours+14))
     w_s = list(range(0,hours,14))
-
+    shift_supply = []
     model = LpProblem("Capacity", LpMinimize)
     
     y = LpVariable.dicts("y", (i_s,j_s), 0, 1, cat='Binary') #shift 1:8-17  ->Shift A2
@@ -194,7 +206,7 @@ def capacity_vn_ca():
     a1 = LpVariable.dicts("a1", (i_s,w_s), 0, 1, cat='Binary') #shift 2:8-17 -> Shift A1
     a4 = LpVariable.dicts("a4", (i_s,w_s), 0, 1, cat='Binary') #shift 3:11-20
     a5 = LpVariable.dicts("a5", (i_s,w_s), 0, 1, cat='Binary') #shift 4:13-21 -> Shift D
-
+    
     ab=[]
     for d in range(1,num_days+1):
             ab.append(LpVariable.dicts("ab%s" %d, (i_s), 0, 1, cat='Binary'))
@@ -319,20 +331,7 @@ def capacity_vn_ca():
         else:
             model += ab[21][i]+ab[22][i]+ab[23][i]+ab[24][i]+ab[25][i]+ab[26][i]+ab[27][i] >= 4 - len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=22) & (df1_bas['daynum']<=28)) & (df1_bas['reason'] != 'DO')])
 
-    
-    #aturan setiap agent harus mendapat kedua shift
-    """
-    for i in i_s:
-        if len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=8) & (df1_bas['daynum']<=14)) & (df1_bas['reason'] != 'DO')]) <= 3:
-            model += lpSum([a2[i][w] for w in w_s[7:14]]) >= 1
-            model += lpSum([a4[i][w] for w in w_s[7:14]]) >= 1        
-        if len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=15) & (df1_bas['daynum']<=21)) & (df1_bas['reason'] != 'DO')]) <=3:
-            model += lpSum([a2[i][w] for w in w_s[14:21]]) >= 1
-            model += lpSum([a4[i][w] for w in w_s[14:21]]) >= 1
-        elif len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=22) & (df1_bas['daynum']<=28)) & (df1_bas['reason'] != 'DO')]) <=3:
-            model += lpSum([a2[i][w] for w in w_s[21:28]]) >= 1
-            model += lpSum([a4[i][w] for w in w_s[21:28]]) >= 1
-    """        
+          
     #aturan minggu 4
     for i in i_s:  
         if len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=29) & (df1_bas['daynum']<=35)) & (df1_bas['reason'] != 'DO')]) > 4:
@@ -454,14 +453,18 @@ def capacity_vn_ca():
     bb = pd.merge(dh1,df[['date1','day','hr1','daynum']],how='inner' ,on=['date1','hr1','day'])
     # ooo = Total Working days in a month (Exclude Public Holiday) 
     ooo = list(bb[bb['check_holiday']==0]['daynum'].unique())
-    print(ooo)
-    print('Total Month days :',len(ooo))
+    oo1 = list(bb[bb['check_holiday']==1]['daynum'].unique())
+    oo2 = list(bb['daynum'].unique())
+    print('Total Working days :',len(ooo))
+    print('Total Holidays :',len(oo1))
     print('Total Weekend :',tot_off)
 #     public_holiday = 1
 #     tot_off = tot_off + public_holiday
     for i in i_s: 
         # Total Working days >= Total Working days - Total weekends - Request Leave / Of   | 28 - 8 - 0 =  20 days
         print(i,len(ooo) -(tot_off) - len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=start+1) & (df1_bas['daynum']<=finish))&( df1_bas['reason'] == 'Annual Leave')]))
+        working_days = len(ooo) -(tot_off) - len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=start+1) & (df1_bas['daynum']<=finish))&( df1_bas['reason'] == 'Annual Leave')])
+        shift_supply.append(working_days)
         model += lpSum([ab[w-1][i] for w in ooo]) == len(ooo) -(tot_off) - len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>=start+1) & (df1_bas['daynum']<=finish))&( df1_bas['reason'] == 'Annual Leave')])
 
         #     for w in w_s:
@@ -478,7 +481,8 @@ def capacity_vn_ca():
     status=model.solve(solver)
     checking=LpStatus[status]
     print(checking)
-
+    shift_demand = len(oo2) * (a1_agent+a2_agent+a5_agent)
+  
     l0 = [x[i][j].name for i,j in product(i_s,j_s)]
     ck = [x[i][j].varValue for i,j in product(i_s,j_s)]
     l1 = [y[i][j].name for i,j in product(i_s,j_s)]
@@ -502,7 +506,7 @@ def capacity_vn_ca():
     vk5 = [a5[i][w].varValue for i,w in product(i_s,w_s)]
 
     Dt_ = pd.DataFrame({'sh0_bas': v0, 'val0_bas':vk0, 'sh1_bas': v1, 'val1_bas':vk1, 'sh2_bas': v4, 'val2_bas':vk4, 'sh3_bas': v5, 'val3_bas':vk5 })
-    return Dt, Dt_
+    return Dt, Dt_,checking, sum(shift_supply),shift_demand
 
 def result_basic(Dt_bas, Dt__bas):
     pp = []
@@ -670,5 +674,4 @@ def str_func(Dt_bas, Dt__bas):
 
 date1_next_month,last2_monday,end_mo,end_mo2,num_days1,num_days2,delta_days = create_date()
 dfdm = create_dfdm()
-dh1 = create_dh1()
 df = create_df(dfdm)

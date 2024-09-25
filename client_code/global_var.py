@@ -12,9 +12,9 @@ from anvil.tables import app_tables
 
 from datetime import datetime,timedelta
 from calendar import monthrange
-holiday = []
-holiday_msg = ''
 
+
+result = ''
 now = datetime.now()
 next_month = now + timedelta(28)
 year = next_month.year
@@ -23,3 +23,6 @@ tot_days = monthrange(year, month)[1]
 col_name1 = ['agent','role']
 col_name = [str(i) for i in range(1,tot_days+1)]
 column_names = col_name1 + col_name
+
+next_month_first = f'{year}-{month}-01'
+next_month_last = f'{year}-{month}-{tot_days}'
