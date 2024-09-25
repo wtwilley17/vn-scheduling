@@ -104,42 +104,103 @@ components:
     name: data_row_panel_2
     properties: {}
     type: DataRowPanel
-  - layout_properties: {grid_position: 'KBMBER,KDKOSP'}
-    name: label_6
-    properties: {text: 'Input Daily Agent Shift Required '}
-    type: Label
-  - layout_properties: {grid_position: 'SNXMQO,ELJFUF NYTCCJ,OZOVZM'}
-    name: text_area_1
-    properties: {enabled: false, height: 48, text: A1}
-    type: TextArea
-  - layout_properties: {grid_position: 'SNXMQO,ELJFUF LTXNOP,QAOFCI'}
-    name: text_area_2
-    properties: {enabled: false, height: 48, text: A2}
-    type: TextArea
-  - layout_properties: {grid_position: 'SNXMQO,ELJFUF AYHABK,LQXSTX'}
-    name: text_area_3
-    properties: {enabled: false, height: 48, text: A5}
-    type: TextArea
-  - data_bindings: []
-    event_bindings: {show: text_box_1_show}
-    layout_properties: {grid_position: 'SNXMQO,MQBFUZ XKQZTW,GYJIBT'}
-    name: text_box_1
-    properties: {hide_text: false, placeholder: Insert Number of Agent(s) Needed, text: '', type: number}
-    type: TextBox
-  - event_bindings: {show: text_box_2_show}
-    layout_properties: {grid_position: 'SNXMQO,MQBFUZ JJKGNG,RYBDCH'}
-    name: text_box_2
-    properties: {placeholder: Insert Number of Agent(s) Needed, type: number}
-    type: TextBox
-  - event_bindings: {show: text_box_3_show}
-    layout_properties: {grid_position: 'SNXMQO,MQBFUZ IRSXPB,BUDWQB'}
-    name: text_box_3
-    properties: {placeholder: Insert Number of Agent(s) Needed, type: number}
-    type: TextBox
-  - layout_properties: {grid_position: 'IVLTFF,JYCSLE'}
-    name: spacer_1
-    properties: {height: 110}
-    type: Spacer
+  - components:
+    - components:
+      - layout_properties: {grid_position: 'JNFMIK,DDFLRV'}
+        name: label_6
+        properties: {align: left, bold: true, text: 'Input Daily Agent Shift Required '}
+        type: Label
+      layout_properties: {grid_position: 'DGZEGJ,JDANHX OTPEBL,JOLMCN'}
+      name: card_7
+      properties: {role: card}
+      type: ColumnPanel
+    - components:
+      - layout_properties: {grid_position: 'RYSIWJ,HAMFLW'}
+        name: label_8
+        properties: {align: right, text: A1 =}
+        type: Label
+      - data_bindings: []
+        event_bindings: {show: text_box_1_show}
+        layout_properties: {grid_position: 'RYSIWJ,BNJCPS'}
+        name: text_box_1
+        properties: {hide_text: false, placeholder: 'Number of Agent(s) ', text: '', type: number}
+        type: TextBox
+      - layout_properties: {grid_position: 'WCKCHG,OLKYSY'}
+        name: label_9
+        properties: {align: right, text: A2 =}
+        type: Label
+      - event_bindings: {show: text_box_2_show}
+        layout_properties: {grid_position: 'WCKCHG,MVXPFN'}
+        name: text_box_2
+        properties: {placeholder: 'Number of Agent(s) ', type: number}
+        type: TextBox
+      - layout_properties: {grid_position: 'SVAMTL,CUWBJT'}
+        name: label_7
+        properties: {align: right, text: A5 =}
+        type: Label
+      - event_bindings: {show: text_box_3_show}
+        layout_properties: {grid_position: 'SVAMTL,LIIYIG'}
+        name: text_box_3
+        properties: {placeholder: Number of Agent(s), type: number}
+        type: TextBox
+      layout_properties: {grid_position: 'DGZEGJ,JDANHX QAORUM,WGVBYQ'}
+      name: card_9
+      properties: {role: card}
+      type: ColumnPanel
+    - components:
+      - layout_properties: {grid_position: 'WYPQYG,DSJUBA'}
+        name: label_10
+        properties: {bold: true, text: 'Shift Balancing '}
+        type: Label
+      layout_properties: {grid_position: 'DGZEGJ,CHTSYJ FDZWAJ,YYTIIC'}
+      name: card_8
+      properties: {role: card}
+      type: ColumnPanel
+    - components:
+      - layout_properties: {grid_position: 'RFFBJV,RSKHYN'}
+        name: label_11
+        properties: {text: A1 Range}
+        type: Label
+      - layout_properties: {grid_position: 'RFFBJV,NIXWXT'}
+        name: text_box_4
+        properties: {}
+        type: TextBox
+      - layout_properties: {grid_position: 'RFFBJV,SLMIXY'}
+        name: text_box_5
+        properties: {}
+        type: TextBox
+      - layout_properties: {grid_position: 'PNFEVT,YJEMOR'}
+        name: label_12
+        properties: {text: A2 Range}
+        type: Label
+      - layout_properties: {grid_position: 'PNFEVT,QGRAOU'}
+        name: text_box_6
+        properties: {}
+        type: TextBox
+      - layout_properties: {grid_position: 'PNFEVT,QVMTIK'}
+        name: text_box_7
+        properties: {}
+        type: TextBox
+      - layout_properties: {grid_position: 'CAHWLQ,MWDRNF'}
+        name: label_13
+        properties: {text: A5 Range}
+        type: Label
+      - layout_properties: {grid_position: 'CAHWLQ,YKSNGA'}
+        name: text_box_8
+        properties: {}
+        type: TextBox
+      - layout_properties: {grid_position: 'CAHWLQ,UUVLTL'}
+        name: text_box_9
+        properties: {}
+        type: TextBox
+      layout_properties: {grid_position: 'DGZEGJ,CHTSYJ VVLDBF,ZVACLJ'}
+      name: card_10
+      properties: {role: card}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'GOSCYL,BDFHOH'}
+    name: card_6
+    properties: {role: card}
+    type: ColumnPanel
   - event_bindings: {click: create_schedule_click}
     layout_properties: {grid_position: 'EMTKKW,UWXMEB'}
     name: create_schedule
@@ -161,7 +222,7 @@ components:
     type: Button
   layout_properties: {slot: default}
   name: content_panel
-  properties: {visible: true}
+  properties: {col_widths: '{}', visible: true}
   type: ColumnPanel
 - layout_properties: {slot: title}
   name: label_1
@@ -169,12 +230,12 @@ components:
   type: Label
 - layout_properties: {slot: sidebar}
   name: link_1
-  properties: {text: VNCA}
+  properties: {bold: true, text: VNCA}
   type: Link
 - event_bindings: {click: link_2_click}
   layout_properties: {slot: sidebar}
   name: link_2
-  properties: {text: Guide}
+  properties: {bold: true, text: Guide}
   type: Link
 container:
   properties: {html: '@theme:dashboard.html'}

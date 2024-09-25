@@ -54,12 +54,12 @@ components:
 - event_bindings: {click: link_1_click}
   layout_properties: {slot: sidebar}
   name: link_1
-  properties: {text: VNCA}
+  properties: {bold: true, text: VNCA}
   type: Link
 - event_bindings: {click: link_2_click}
   layout_properties: {slot: sidebar}
   name: link_2
-  properties: {text: GUIDE}
+  properties: {bold: true, text: GUIDE}
   type: Link
 container:
   properties: {html: '@theme:dashboard.html'}
