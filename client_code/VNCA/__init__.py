@@ -6,6 +6,7 @@ from anvil.tables import app_tables
 import anvil.server
 from .. import global_var
 from datetime import datetime
+from ..result_table import result_table
 
 holiday = []
 holiday_msg = ''
@@ -65,20 +66,21 @@ class VNCA(VNCATemplate):
 
   def create_schedule_click(self, **event_args):
     """This method is called when the button is clicked"""
-    global result
     a1 = self.text_box_1.text
     a2 = self.text_box_2.text
     a5 = self.text_box_3.text
-    result, supply, demand = anvil.server.call('scheduling',holiday,a1,a2,a5)
-    if result == 'Infeasible':
-      error_mes = f'{result} \nShift Supply : {supply} \nShift Demand : {demand}'
+    global_var.result, supply, demand = anvil.server.call('scheduling',holiday,a1,a2,a5)
+    if global_var.result == 'Infeasible':
+      error_mes = f'{global_var.result} \nShift Supply : {supply} \nShift Demand : {demand}'
       alert(error_mes,large=True)
     else:
       self.card_5.visible = True
       self.final_table.visible = True
       self.download_result.visible = True
-      self.final_table.content = result
-      open_form('VNCA.result_table')
+      self.final_table.content = global_var.result
+      alert(content=result_table(),
+        title="VNCA Schedule Result",
+        large=True,)
 
   def download_result_click(self, **event_args):
     """This method is called when the button is clicked"""

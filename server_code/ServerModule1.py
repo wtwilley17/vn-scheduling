@@ -17,20 +17,6 @@ import xlrd
 from dateutil.relativedelta import relativedelta, MO
 from pandas.tseries.offsets import MonthEnd
 
-
-# This is a server module. It runs on the Anvil server,
-# rather than in the user's browser.
-#
-# To allow anvil.server.call() to call functions here, we mark
-# them with @anvil.server.callable.
-# Here is an example - you can replace it with your own:
-#
-# @anvil.server.callable
-# def say_hello(name):
-#   print("Hello, " + name + "!")
-#   return 42
-#
-
 @anvil.server.callable
 def store_agent_data(file):
   # Reset Table
@@ -79,7 +65,6 @@ def store_df1bas():
 @anvil.server.callable
 def scheduling(holiday_dates,a1,a2,a5):
   global df1_bas,df2_bas,dh1
-  print(holiday_dates)
   dh1 = create_dh1(holiday_dates)
   df1_bas = create_df1_bas(dfdm)
   df2_bas = create_df2_bas()
@@ -123,11 +108,6 @@ def create_date():
   # End of this month date
   end_mo = today + MonthEnd(0)
   end_mo2 = date1_next_month + MonthEnd(0)
-  
-  # print(date1_next_month.strftime("%Y-%m-%d"))
-  # print(last2_monday.strftime("%Y-%m-%d"))
-  # print(end_mo.strftime("%Y-%m-%d"))
-  # print(end_mo2.strftime("%Y-%m-%d"))
   
   delta = end_mo2.date() - last2_monday.date()
   num_days1 =delta.days+1
@@ -182,7 +162,6 @@ def create_df(dfdm):
   return df
 
 def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2):
-    print(a1_agent,a2_agent,a5_agent)
     now = datetime.now()
     next_month = now + relativedelta(months=+1)
     year = next_month.year
