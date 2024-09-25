@@ -1,10 +1,10 @@
 color_scheme:
   colors:
-  - {color: '#009688', name: Accent 1}
-  - {color: '#00796B', name: Accent 2}
-  - {color: '#D7D7D7', name: Background}
-  - {color: '#F5F5F5', name: Header Background}
-  - {color: '#333333', name: Sidebar Background}
+  - {color: '#47bbe4', name: Accent 1}
+  - {color: '#f27d31', name: Accent 2}
+  - {color: '#F5F5F5', name: Background}
+  - {color: '#47bbe4', name: Header Background}
+  - {color: '#f27d31', name: Sidebar Background}
   preset_groups:
   - name: Accent
     options:

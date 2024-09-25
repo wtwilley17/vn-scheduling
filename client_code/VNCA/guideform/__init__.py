@@ -17,3 +17,7 @@ class guideform(guideformTemplate):
     """This method is called when the link is clicked"""
     open_form('VNCA')
 
+  def link_2_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    open_form('result_table')
+

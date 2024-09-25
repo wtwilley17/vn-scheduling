@@ -3,7 +3,7 @@ components:
   - data_bindings: []
     layout_properties: {grid_position: 'KQJFYK,YBIPGN'}
     name: label_2
-    properties: {text: Upload Available Agent for Next Month}
+    properties: {font: '', font_size: null, text: Upload Available Agent for Next Month}
     type: Label
   - components:
     - components:
@@ -165,7 +165,7 @@ components:
   type: ColumnPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {text: VN Scheduling}
+  properties: {font_size: 25, spacing_above: small, spacing_below: small, text: VN Scheduling}
   type: Label
 - layout_properties: {slot: sidebar}
   name: link_1
