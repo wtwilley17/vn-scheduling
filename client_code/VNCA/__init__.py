@@ -1,5 +1,6 @@
 from ._anvil_designer import VNCATemplate
 from anvil import *
+import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
@@ -16,7 +17,7 @@ class VNCA(VNCATemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.result = ''
-    self.repeating_panel_get_leave.items = anvil.server.call('get_agent_leave_pg')
+    #self.repeating_panel_get_leave.items = anvil.server.call('get_agent_leave_pg')
     # Any code you write here will run before the form opens.
   
   def upload_agent_click(self, **event_args):
