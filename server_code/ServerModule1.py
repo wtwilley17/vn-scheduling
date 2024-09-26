@@ -19,6 +19,7 @@ from dateutil.relativedelta import relativedelta, MO
 from pandas.tseries.offsets import MonthEnd
 import psycopg2
 import psycopg2.extras
+from .query import *
 
 @anvil.server.callable
 def store_agent_data(file):
@@ -91,18 +92,14 @@ def get_csv():
   media = anvil.media.from_file('/tmp/final.csv', 'csv', 'final.csv')
   return media
 
-@anvil.server.callable
-def get_agent_list():
-  conn = connect()
-  with conn.cursor() as cur:
-    cur.execute("SELECT name,date_of_birth,score FROM users")
-    return cur.fetchall()
 
 @anvil.server.callable
-def get_agent_leave():
+def get_agent_leave_pg():
+  print('connecting')
   conn = connect()
-  with conn.cursor() as cur:
-    cur.execute("SELECT name,date_of_birth,score FROM users")
+  print('connected',conn)
+  with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+    cur.execute(query_leave)
     return cur.fetchall()
   
 
@@ -113,6 +110,7 @@ def connect():
                                 host='pgm-d9jxszcmh2pvzi1493120.pgsql.ap-southeast-5.rds.aliyuncs.com',
                                 user='ops_appsheet_prod',
                                 password=anvil.secrets.get_secret('db_password'))
+                                #password='WTzQLgYh7EwwZVx6i7ayp5jei3dryk3w')
   return connection
   
 def dummy_df(start, end, x):

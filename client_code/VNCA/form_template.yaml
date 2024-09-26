@@ -38,6 +38,23 @@ components:
     type: Label
   - components:
     - components:
+      - name: repeating_panel_get_leave
+        properties: {item_template: VNCA.RowTemplate7}
+        type: RepeatingPanel
+      layout_properties: {grid_position: 'PVDXYB,JSZKOA'}
+      name: data_grid_2
+      properties:
+        columns:
+        - {data_key: column_1, id: JKSDUP, title: Column 1}
+        - {data_key: column_2, id: VJQQOR, title: Column 2}
+        - {data_key: column_3, id: OJLQEN, title: Column 3}
+      type: DataGrid
+    layout_properties: {grid_position: 'WWTJRB,MIZVMK'}
+    name: card_11
+    properties: {role: card}
+    type: ColumnPanel
+  - components:
+    - components:
       - name: agent_leave_repeating
         properties: {item_template: VNCA.RowTemplate4}
         type: RepeatingPanel
