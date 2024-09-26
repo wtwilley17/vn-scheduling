@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
@@ -16,6 +17,8 @@ import warnings
 import xlrd
 from dateutil.relativedelta import relativedelta, MO
 from pandas.tseries.offsets import MonthEnd
+import psycopg2
+import psycopg2.extras
 
 @anvil.server.callable
 def store_agent_data(file):
@@ -87,9 +90,31 @@ def scheduling(holiday_dates,a1,a2,a5):
 def get_csv():
   media = anvil.media.from_file('/tmp/final.csv', 'csv', 'final.csv')
   return media
+
+@anvil.server.callable
+def get_agent_list():
+  conn = connect()
+  with conn.cursor() as cur:
+    cur.execute("SELECT name,date_of_birth,score FROM users")
+    return cur.fetchall()
+
+@anvil.server.callable
+def get_agent_leave():
+  conn = connect()
+  with conn.cursor() as cur:
+    cur.execute("SELECT name,date_of_birth,score FROM users")
+    return cur.fetchall()
   
 
-### Scheduling ####
+### Function ####
+
+def connect():
+  connection = psycopg2.connect(dbname='appsheet_ops',
+                                host='pgm-d9jxszcmh2pvzi1493120.pgsql.ap-southeast-5.rds.aliyuncs.com',
+                                user='ops_appsheet_prod',
+                                password=anvil.secrets.get_secret('db_password'))
+  return connection
+  
 def dummy_df(start, end, x):
   date_range = pd.date_range(start, end)
   repeated_dates = date_range.repeat(x)
