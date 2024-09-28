@@ -1,6 +1,5 @@
 from ._anvil_designer import VNCATemplate
 from anvil import *
-import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
@@ -35,7 +34,7 @@ class VNCA(VNCATemplate):
     if file == None:
       alert('Please Upload Agent Leave')
     else:
-      anvil.server.call('store_leave_data',file)
+      self.leave_request_msg.text = anvil.server.call('store_leave_data',file)
       self.agent_leave_repeating.items = app_tables.agent_leave.search()
       anvil.server.call('store_df1bas')
 

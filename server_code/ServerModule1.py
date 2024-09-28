@@ -1,6 +1,3 @@
-import anvil.files
-from anvil.files import data_files
-import anvil.users
 import anvil.secrets
 import anvil.tables as tables
 import anvil.tables.query as q
@@ -59,6 +56,10 @@ def store_leave_data(file):
   # Insert to table
   for row in csv_reader:
     app_tables.agent_leave.add_row(date_leave=pd.to_datetime(row[0]).date(),name=row[1],reason=row[2])
+  date_io2 = io.StringIO(data_str)
+  df = pd.read_csv(date_io2)
+  msg = leave_check(df)
+  return msg
   
 @anvil.server.callable
 def store_df1bas():
@@ -181,7 +182,32 @@ def create_dh1(holiday_dates):
 def leave_check(df):
   message = ''
   request_date = []
-  agent_list = df.agent_id.unique()
+  agent_list = list(df.name.unique())
+  # loop for every agent
+  for i in agent_list:
+    df_temp = df[df.name == i].reset_index(drop=True)
+    # create a temporary df for each agent
+    for index, row in df_temp.iterrows():
+    # loop each agent leave request
+      if index < len(df_temp)-1: 
+        list_temp = list(df_temp.loc[[index, index+1], 'date_leave'])
+        req_delta = pd.to_datetime(list_temp[1]) - pd.to_datetime(list_temp[0])
+        #print(list_temp,req_delta)
+        #work - holiday - work
+        if req_delta.days == 2:
+          # check the request type
+          leave_type = list(df_temp.loc[[index, index+1], 'reason'])
+          print(leave_type[0],leave_type[1])
+          if leave_type[0] == leave_type[1] == 'DO':
+            message += f'{i} Work - Off - Work on {list_temp[0]} and {list_temp[1]}\n'
+          #elif req_delta > 5:
+          # check if its within the same week
+  #print(message)
+  return message
+        
+          
+          
+        
 
 def create_df(dfdm):
   df =dummy_df(last2_monday,end_mo2,14)
