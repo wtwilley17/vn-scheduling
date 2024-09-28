@@ -1,3 +1,19 @@
+/* Customise the loading spinner */
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+#loadingSpinner {
+  -webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+    border-radius: 0;
+    background-size: cover;
+    box-shadow: none;/*0px 0px 10px 10px #fcfcfc;*/
+    background-color: transparent;
+    background-image: url("https://ca.slack-edge.com/E04L5CQ908G-U023GQA7MJ4-d0debdc6df8b-72") !important;
+}
+
+
 body * {
   box-sizing: border-box;
 }
