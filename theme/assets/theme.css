@@ -295,3 +295,8 @@ body.anvil-highlight .nav-elt.placeholder {
   touch-action: manipulation;
 }
 
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #f27d31;
+    border-color: transparent;
+    color: #fff;
+}

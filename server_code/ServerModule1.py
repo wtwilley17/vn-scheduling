@@ -178,6 +178,10 @@ def create_dh1(holiday_dates):
       dh1.at[index, 'check_holiday'] = 1
   return dh1
 
+def leave_check(df):
+  message = ''
+  request_date = []
+  agent_list = df.agent_id.unique()
 
 def create_df(dfdm):
   df =dummy_df(last2_monday,end_mo2,14)
