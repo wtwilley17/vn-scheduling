@@ -10,7 +10,7 @@
     background-size: cover;
     box-shadow: none;/*0px 0px 10px 10px #fcfcfc;*/
     background-color: transparent;
-    background-image: url("https://ca.slack-edge.com/E04L5CQ908G-U023GQA7MJ4-d0debdc6df8b-72") !important;
+    background-image: url("_/theme/resource/deny.png") !important;
 }
 
 
@@ -279,3 +279,19 @@ body.anvil-highlight .nav-elt.placeholder {
   overflow-y: scroll;
   overflow-x: scroll;
 }
+
+.btn {
+  background-image: linear-gradient(#47bbe4, #0d70ea);
+  border: 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+

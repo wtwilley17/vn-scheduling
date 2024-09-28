@@ -25,12 +25,12 @@ components:
   - data_bindings: []
     layout_properties: {grid_position: 'ONFBMZ,MHKILA'}
     name: file_loader_2
-    properties: {}
+    properties: {align: center}
     type: FileLoader
   - event_bindings: {click: upload_agent_click}
-    layout_properties: {grid_position: 'PKJRXJ,KFKAER'}
+    layout_properties: {grid_position: 'PKJRXJ,KFKAER', row_background: ''}
     name: upload_agent
-    properties: {text: Upload Agent}
+    properties: {font_size: null, role: upload_button, text: Upload Agent}
     type: Button
   - layout_properties: {grid_position: 'SEPRDE,GGZPTW'}
     name: label_3
