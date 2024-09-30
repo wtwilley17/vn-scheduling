@@ -34,9 +34,10 @@ class VNCA(VNCATemplate):
     if file == None:
       alert('Please Upload Agent Leave')
     else:
-      self.leave_request_msg.text = anvil.server.call('store_leave_data',file)
+      leave_text = anvil.server.call('store_leave_data',file)
       self.agent_leave_repeating.items = app_tables.agent_leave.search()
       anvil.server.call('store_df1bas')
+      self.leave_request_msg.text = leave_text
 
   def add_holiday_click(self, **event_args):
     """This method is called when the button is clicked"""
