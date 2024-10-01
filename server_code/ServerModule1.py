@@ -111,7 +111,7 @@ def get_agent_leave_pg():
 
 def connect():
   connection = psycopg2.connect(dbname='appsheet_ops',
-                                host='pgm-d9jxszcmh2pvzi1493120.pgsql.ap-southeast-5.rds.aliyuncs.com',
+                                host='pgm-d9jxszcmh2pvzi140o.pgsql.ap-southeast-5.rds.aliyuncs.com',
                                 user='ops_appsheet_prod',
                                 password=anvil.secrets.get_secret('db_password'))
                                 #password='WTzQLgYh7EwwZVx6i7ayp5jei3dryk3w')
