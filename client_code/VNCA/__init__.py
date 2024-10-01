@@ -8,8 +8,10 @@ from .. import global_var
 from datetime import datetime
 from ..result_table import result_table
 
+# Local Variable
 holiday = []
 holiday_msg = ''
+
 
 class VNCA(VNCATemplate):
   def __init__(self, **properties):

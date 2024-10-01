@@ -21,6 +21,8 @@ import psycopg2
 import psycopg2.extras
 from .query import *
 
+
+# Front End Function
 @anvil.server.callable
 def store_agent_data(file):
   # Reset Table
