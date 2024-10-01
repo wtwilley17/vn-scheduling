@@ -17,7 +17,7 @@ class VNCA(VNCATemplate):
     self.init_components(**properties)
     self.result = ''
     # Populate the table with query from postgre
-    self.repeating_panel_get_leave.items = anvil.server.call('get_agent_leave_pg')
+    #self.repeating_panel_get_leave.items = anvil.server.call('get_agent_leave_pg')
     # Any code you write here will run before the form opens.
   
   def upload_agent_click(self, **event_args):
