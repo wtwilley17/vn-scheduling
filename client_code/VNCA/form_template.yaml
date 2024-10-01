@@ -248,7 +248,7 @@ components:
   type: ColumnPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {font_size: 25, spacing_above: small, spacing_below: small, text: VN Scheduling}
+  properties: {font_size: 22, spacing_above: small, spacing_below: small, text: VN Scheduling}
   type: Label
 - layout_properties: {slot: sidebar}
   name: link_1
