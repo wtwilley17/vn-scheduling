@@ -49,7 +49,7 @@ components:
   type: ColumnPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {font_size: 25, text: vn sCHEDULING}
+  properties: {font_size: 22, text: vn sCHEDULING}
   type: Label
 - event_bindings: {click: link_1_click}
   layout_properties: {slot: sidebar}
