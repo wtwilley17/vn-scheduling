@@ -74,7 +74,8 @@ class VNCA(VNCATemplate):
     a1 = self.text_box_1.text
     a2 = self.text_box_2.text
     a5 = self.text_box_3.text
-    global_var.result, supply, demand = anvil.server.call('scheduling',holiday,a1,a2,a5)
+    balance = [self.a1_min,self.a1_max,self.a2_min,self.a2_max,self.a5_min,self.a5_max]
+    global_var.result, supply, demand = anvil.server.call('scheduling',holiday,a1,a2,a5,balance)
     if global_var.result == 'Infeasible':
       error_mes = f'{global_var.result} \nShift Supply : {supply} \nShift Demand : {demand}'
       alert(error_mes,large=True)

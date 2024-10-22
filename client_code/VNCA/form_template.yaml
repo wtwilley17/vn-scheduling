@@ -184,11 +184,11 @@ components:
         properties: {text: A1 Range}
         type: Label
       - layout_properties: {grid_position: 'RFFBJV,NIXWXT'}
-        name: text_box_4
+        name: a1_min
         properties: {}
         type: TextBox
       - layout_properties: {grid_position: 'RFFBJV,SLMIXY'}
-        name: text_box_5
+        name: a1_max
         properties: {}
         type: TextBox
       - layout_properties: {grid_position: 'PNFEVT,YJEMOR'}
@@ -196,11 +196,11 @@ components:
         properties: {text: A2 Range}
         type: Label
       - layout_properties: {grid_position: 'PNFEVT,QGRAOU'}
-        name: text_box_6
+        name: a2_min
         properties: {}
         type: TextBox
       - layout_properties: {grid_position: 'PNFEVT,QVMTIK'}
-        name: text_box_7
+        name: a2_max
         properties: {}
         type: TextBox
       - layout_properties: {grid_position: 'CAHWLQ,MWDRNF'}
@@ -208,11 +208,11 @@ components:
         properties: {text: A5 Range}
         type: Label
       - layout_properties: {grid_position: 'CAHWLQ,YKSNGA'}
-        name: text_box_8
+        name: a5_min
         properties: {}
         type: TextBox
       - layout_properties: {grid_position: 'CAHWLQ,UUVLTL'}
-        name: text_box_9
+        name: a5_max
         properties: {}
         type: TextBox
       layout_properties: {grid_position: 'DGZEGJ,CHTSYJ VVLDBF,ZVACLJ'}

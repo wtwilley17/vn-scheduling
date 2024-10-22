@@ -219,7 +219,7 @@ def create_df(dfdm):
   df['day'] = df.date1.dt.day
   return df
 
-def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2):
+def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2,balance=[5,6,5,6,10,11]):
     now = datetime.now()
     next_month = now + relativedelta(months=+1)
     year = next_month.year
@@ -476,12 +476,12 @@ def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2):
     #fungsi buat bagi rata
     for i in i_s:
         if i not in df2_bas[(df2_bas['stat']=='nw')]['agent_id'].to_list() and i in df2_bas[df2_bas['role']=='Agent']['agent_id'].to_list(): #- (lpSum([a4[i][w] for w in w_s]) - lpSum([a2[i][w] + a1[i][w] for w in w_s]))
-            model += lpSum([a1[i][w] for w in range((start*14), (finish*14),14)]) >= 5#nums1-1#((tot_days - tot_off)//2)-3
-            model += lpSum([a1[i][w] for w in range((start*14), (finish*14),14)]) <= 6#((tot_days - tot_off)//2)-3
-            model += lpSum([a2[i][w] for w in range((start*14), (finish*14),14)]) >= 5#nums2-e2#((tot_days - tot_off)//2)-3
-            model += lpSum([a2[i][w] for w in range((start*14), (finish*14),14)]) <= 6#nums2+e2
-            model += lpSum([a5[i][w] for w in range((start*14), (finish*14),14)]) >= 10#nums5-e5#((tot_days - tot_off)//2)-3
-            model += lpSum([a5[i][w] for w in range((start*14), (finish*14),14)]) <= 11#nums5+e5#((tot_days - tot_off)//2)-3
+            model += lpSum([a1[i][w] for w in range((start*14), (finish*14),14)]) >= balance[0]#nums1-1#((tot_days - tot_off)//2)-3
+            model += lpSum([a1[i][w] for w in range((start*14), (finish*14),14)]) <= balance[1]#((tot_days - tot_off)//2)-3
+            model += lpSum([a2[i][w] for w in range((start*14), (finish*14),14)]) >= balance[2]#nums2-e2#((tot_days - tot_off)//2)-3
+            model += lpSum([a2[i][w] for w in range((start*14), (finish*14),14)]) <= balance[3]#nums2+e2
+            model += lpSum([a5[i][w] for w in range((start*14), (finish*14),14)]) >= balance[4]#nums5-e5#((tot_days - tot_off)//2)-3
+            model += lpSum([a5[i][w] for w in range((start*14), (finish*14),14)]) <= balance[5]#nums5+e5#((tot_days - tot_off)//2)-3
             
     new_dh1 = dh1.groupby(['date1','name day'])['name day'].unique().reset_index(name='nm')
     tot_off = len(new_dh1[(new_dh1['name day']=='Saturday') | (new_dh1['name day']=='Sunday')])
