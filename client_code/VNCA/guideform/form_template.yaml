@@ -15,7 +15,10 @@ components:
       type: Label
     - layout_properties: {grid_position: 'TUXJDX,PDOOOF'}
       name: text_area_1
-      properties: {enabled: false}
+      properties:
+        auto_expand: true
+        enabled: false
+        text: "WITH leave_request AS (\n    SELECT \n        date(date_leave) AS date_leave, \n        name, \n        reason\n    FROM (\n        SELECT *,\n               generate_series(start_date, end_date, '1 day'::interval) AS date_leave\n        FROM ca_vn_agent_leave cval\n        WHERE start_date BETWEEN date_trunc('month', (current_date + INTERVAL '1 month')) \n                            AND date_trunc('month', (current_date + INTERVAL '1 month') + INTERVAL '1 month') - INTERVAL '1 day'\n        ORDER BY start_date\n    ) AS subquery1\n),\n\nleave_schedule AS (\n    SELECT \n        date_leave, \n        name, \n        type AS reason\n    FROM (\n        SELECT \n            date AS date_leave, \n            agent AS name,\n            agent_email AS email,\n            status AS type,\n            EXTRACT(DAY FROM date) AS day, \n            EXTRACT(MONTH FROM date) AS month,\n            EXTRACT(YEAR FROM date) AS year,\n            ROW_NUMBER() OVER (PARTITION BY date, agent, channel ORDER BY status) AS row_num\n        FROM vn_ca_agent_schedule_edit AS schedule\n        WHERE date BETWEEN ((date_trunc('MONTH', CURRENT_DATE) + INTERVAL '1 MONTH - 1 day')::DATE - INTERVAL '9 days') \n                        AND (date_trunc('MONTH', CURRENT_DATE) + INTERVAL '1 MONTH - 1 day')::DATE \n          AND status IN ('X', 'AL', 'RO')\n    ) AS subquery2\n    WHERE row_num = 1\n)\n\nSELECT \n    date_leave, \n    name,\n    CASE \n        WHEN reason = 'X' THEN 'Request Off' \n        --WHEN reason = 'DO' THEN 'Request Off' \n        WHEN reason = 'AL' THEN 'Annual Leave' \n        ELSE reason \n    END AS reason\nFROM (\n    SELECT *\n    FROM leave_schedule\n\n    UNION ALL\n\n    SELECT *\n    FROM leave_request\n) AS combined_results;"
       type: TextArea
     - layout_properties: {grid_position: 'ADBMLI,PPRPPY'}
       name: label_5
