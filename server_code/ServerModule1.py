@@ -73,13 +73,13 @@ def store_df1bas():
     app_tables.df1_bas.add_row(name=row['name'], reason=row['reason'],daynum=row['daynum'])
 
 @anvil.server.callable
-def scheduling(holiday_dates,a1,a2,a5):
+def scheduling(holiday_dates,a1,a2,a5,balance):
   global df1_bas,df2_bas,dh1
   dh1 = create_dh1(holiday_dates)
   df1_bas = create_df1_bas(dfdm)
   df2_bas = create_df2_bas()
   app_tables.final.delete_all_rows()
-  Dt_bas, Dt__bas, status, supply, demand = capacity_vn_ca(a1,a2,a5)
+  Dt_bas, Dt__bas, status, supply, demand = capacity_vn_ca(a1,a2,a5,balance)
   if status == 'Optimal':
     final = str_func(Dt_bas=Dt_bas, Dt__bas=Dt__bas)
     for d in final.to_dict(orient="records"):

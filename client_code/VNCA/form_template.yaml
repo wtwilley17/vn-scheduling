@@ -185,11 +185,11 @@ components:
         type: Label
       - layout_properties: {grid_position: 'RFFBJV,NIXWXT'}
         name: a1_min
-        properties: {}
+        properties: {type: number}
         type: TextBox
       - layout_properties: {grid_position: 'RFFBJV,SLMIXY'}
         name: a1_max
-        properties: {}
+        properties: {type: number}
         type: TextBox
       - layout_properties: {grid_position: 'PNFEVT,YJEMOR'}
         name: label_12
@@ -197,11 +197,11 @@ components:
         type: Label
       - layout_properties: {grid_position: 'PNFEVT,QGRAOU'}
         name: a2_min
-        properties: {}
+        properties: {type: number}
         type: TextBox
       - layout_properties: {grid_position: 'PNFEVT,QVMTIK'}
         name: a2_max
-        properties: {}
+        properties: {type: number}
         type: TextBox
       - layout_properties: {grid_position: 'CAHWLQ,MWDRNF'}
         name: label_13
@@ -209,11 +209,11 @@ components:
         type: Label
       - layout_properties: {grid_position: 'CAHWLQ,YKSNGA'}
         name: a5_min
-        properties: {}
+        properties: {text: '', type: number}
         type: TextBox
       - layout_properties: {grid_position: 'CAHWLQ,UUVLTL'}
         name: a5_max
-        properties: {}
+        properties: {text: '', type: number}
         type: TextBox
       layout_properties: {grid_position: 'DGZEGJ,CHTSYJ VVLDBF,ZVACLJ'}
       name: card_10
