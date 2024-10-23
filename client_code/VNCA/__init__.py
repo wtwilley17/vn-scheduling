@@ -18,6 +18,15 @@ class VNCA(VNCATemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.result = ''
+    self.text_box_1.text = 1
+    self.text_box_2.text = 1
+    self.text_box_3.text = 2
+    self.a1_min.text = 5
+    self.a1_max.text = 6
+    self.a2_min.text = 5
+    self.a2_max.text = 6
+    self.a5_min.text = 10
+    self.a5_max.text = 11
     # Populate the table with query from postgre
     #self.repeating_panel_get_leave.items = anvil.server.call('get_agent_leave_pg')
     # Any code you write here will run before the form opens.
@@ -74,7 +83,8 @@ class VNCA(VNCATemplate):
     a1 = self.text_box_1.text
     a2 = self.text_box_2.text
     a5 = self.text_box_3.text
-    balance = [self.a1_min,self.a1_max,self.a2_min,self.a2_max,self.a5_min,self.a5_max]
+    balance = [self.a1_min.text,self.a1_max.text,self.a2_min.text,self.a2_max.text,self.a5_min.text,self.a5_max.text]
+    print(balance)
     global_var.result, supply, demand = anvil.server.call('scheduling',holiday,a1,a2,a5,balance)
     if global_var.result == 'Infeasible':
       error_mes = f'{global_var.result} \nShift Supply : {supply} \nShift Demand : {demand}'
@@ -105,21 +115,6 @@ class VNCA(VNCATemplate):
   def link_2_click(self, **event_args):
     """This method is called when the link is clicked"""
     open_form('VNCA.guideform')
-
-  def text_box_1_show(self, **event_args):
-    """This method is called when the TextBox is shown on the screen"""
-    self.text_box_1.text = 1
-
-  def text_box_2_show(self, **event_args):
-    """This method is called when the TextBox is shown on the screen"""
-    self.text_box_2.text = 1
-
-  def text_box_3_show(self, **event_args):
-    """This method is called when the TextBox is shown on the screen"""
-    self.text_box_3.text = 2
-
-
-    
     
     
 

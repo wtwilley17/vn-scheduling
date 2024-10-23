@@ -467,7 +467,7 @@ def capacity_vn_ca(a1_agent=1,a2_agent=1,a5_agent=2,balance=[5,6,5,6,10,11]):
     #Maximum working days in a work consecutively 
     for w in w_s[1:-5]:
         for i in i_s:
-            model += ab[w//14][i]+ab[w//14+1][i]+ab[w//14+2][i]+ab[w//14+3][i]+ab[w//14+4][i] <= 5-len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>= w//14) & (df1_bas['daynum']<=(w//14+5) )) & (df1_bas['reason'] == 'Annual Leave')])      
+            model += ab[w//14][i]+ab[w//14+1][i]+ab[w//14+2][i]+ab[w//14+3][i]+ab[w//14+4][i]+ab[w//14+5][i] <= 6#-len(df1_bas[(df1_bas['name']==i) & ((df1_bas['daynum']>= w//14) & (df1_bas['daynum']<=(w//14+5) )) & (df1_bas['reason'] == 'Annual Leave')])      
     
     
     start = df[df['date1'] == dh1['date1'][0]]['daynum'].iloc[0]-1
